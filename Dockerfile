@@ -13,7 +13,7 @@ RUN npm install && npm install -g ts-node
 # Copy the rest of the application code into the container
 COPY . .
 
-# Specify the command to run when the container starts
-CMD [ "ts-node", "src/bot.ts" ] 
+# Run the app when the container launches
+CMD [ "ts-node", "src/commands/registerCommand.ts", "src/bot.ts" ] 
 
 EXPOSE 3000

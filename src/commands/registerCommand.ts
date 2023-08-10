@@ -3,7 +3,7 @@ import { environment } from '../config/environment';
 
 const commands = [
     {
-        name: 'download',
+        name: 'download.mp3',
         description: 'Download YouTube video as MP3',
         options: [
             {
