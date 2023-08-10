@@ -15,3 +15,5 @@ COPY . .
 
 # Specify the command to run when the container starts
 CMD [ "ts-node", "src/bot.ts" ] 
+
+EXPOSE 3000
