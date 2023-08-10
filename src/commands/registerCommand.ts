@@ -1,5 +1,5 @@
 import { REST, Routes } from 'discord.js';
-import { environment } from './config/environment';
+import { environment } from '../config/environment';
 
 const commands = [
     {
@@ -8,7 +8,7 @@ const commands = [
         options: [
             {
                 name: 'url',
-                type: 'STRING',
+                type: 3,
                 description: 'URL of the YouTube video',
                 required: true,
             },
