@@ -7,7 +7,7 @@ export async function handleInteractionCreate(interaction: Interaction) {
   const { commandName } = interaction;
 
   switch (commandName) {
-    case "download":
+    case "download_mp3":
       await handleDownloadCommand(interaction);
       break;
     // other case statements for other commands
