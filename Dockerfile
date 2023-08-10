@@ -14,6 +14,6 @@ RUN npm install && npm install -g ts-node
 COPY . .
 
 # Run the app when the container launches
-CMD [ "ts-node", "src/commands/registerCommand.ts", "src/bot.ts" ] 
+CMD [ "ts-node", "src/bot.ts" ] 
 
 EXPOSE 3000
