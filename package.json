@@ -1,0 +1,28 @@
+{
+  "name": "ytaudio_discordbot",
+  "version": "1.0.0",
+  "description": "A powerful Discord bot that fetches downloadable MP3 links from YouTube videos using slash commands. Integrated seamlessly with a custom YouTube audio downloader API.",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "discord.js": "^14.12.1",
+    "dotenv": "^16.3.1"
+  }
+}
