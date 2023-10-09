@@ -23,7 +23,7 @@ A powerful Discord bot that fetches downloadable MP3 links from YouTube videos u
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Hexcss/YTAudio-DiscordBot.git
+git clone https://github.com/Hexcss/personal-yt-downloader-discord-bot.git
 ```
 
 2. Navigate to the project directory and install dependencies:
