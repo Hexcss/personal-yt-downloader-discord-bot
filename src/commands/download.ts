@@ -9,7 +9,12 @@ export async function handleDownloadCommand(interaction: CommandInteraction) {
   await interaction.deferReply();
 
   try {
+
+    console.log("Requesting download for:", url);
+
     const response = await axios.post((environment.youtubeApiEndpoint as string), { url: url });
+
+    console.log("Response Status:", response.status);
 
     if (typeof response.data === "string") {
       const { embeds, components }= createDownloadEmbed(response.data);

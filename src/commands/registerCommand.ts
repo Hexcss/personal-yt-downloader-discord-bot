@@ -14,6 +14,10 @@ const commands = [
             },
         ],
     },
+    {
+        name: 'ping',
+        description: 'Replies with Pong!',
+    }
 ];
 
 const token = environment.discordBotToken; // Replace with your bot token

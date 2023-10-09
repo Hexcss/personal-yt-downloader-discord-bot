@@ -10,6 +10,9 @@ export async function handleInteractionCreate(interaction: Interaction) {
     case "download_mp3":
       await handleDownloadCommand(interaction);
       break;
+    case "ping":
+      await interaction.reply("Pong!");
+      break;
     // other case statements for other commands
   }
 }
