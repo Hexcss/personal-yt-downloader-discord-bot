@@ -4,6 +4,8 @@ steps:
       - 'compute'
       - 'ssh'
       - '$_GCE_USERNAME@$_GCE_INSTANCE'
+      - '--zone'
+      - '$_GCE_ZONE'
       - '--command'
       - |
         docker pull gcr.io/$_PROJECT_ID/video-downloader-bot:latest && 
