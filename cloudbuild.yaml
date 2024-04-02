@@ -8,9 +8,9 @@ steps:
       - '$_GCE_ZONE'
       - '--command'
       - |
-        docker pull gcr.io/$_PROJECT_ID/video-downloader-bot:latest && 
-        docker stop video-downloader-bot-container && 
-        docker run --rm -d --name video-downloader-bot-container \
+        sudo docker pull gcr.io/$_PROJECT_ID/video-downloader-bot:latest && 
+        sudo docker stop video-downloader-bot-container && 
+        sudo docker run --rm -d --name video-downloader-bot-container \
           -p 3001:3001 \
           -e DISCORD_BOT_TOKEN=$_DISCORD_BOT_TOKEN \
           -e DISCORD_CLIENT_ID=$_DISCORD_CLIENT_ID \
