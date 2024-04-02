@@ -16,4 +16,4 @@ COPY . .
 # Run the app when the container launches
 CMD [ "ts-node", "src/bot.ts" ] 
 
-EXPOSE 3000
+EXPOSE 3001

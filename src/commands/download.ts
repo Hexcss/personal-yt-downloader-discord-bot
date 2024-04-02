@@ -12,7 +12,7 @@ export async function handleDownloadCommand(interaction: CommandInteraction) {
 
     console.log("Requesting download for:", url);
 
-    const response = await axios.post((environment.youtubeApiEndpoint as string), { url: url });
+    const response = await axios.post((environment.youtubeApiEndpoint as string) + "/ytdl/downloadmp3", { url: url });
 
     console.log("Response Status:", response.status);
 

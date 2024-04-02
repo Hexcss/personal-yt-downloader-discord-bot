@@ -1,0 +1,21 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'compute'
+      - 'ssh'
+      - '$_GCE_USERNAME@$_GCE_INSTANCE'
+      - '--command'
+      - |
+        docker pull gcr.io/$PROJECT_ID/video-downloader-bot:latest && 
+        docker stop video-downloader-bot-container && 
+        docker run --rm -d --name video-downloader-bot-container \
+          -p 3001:3001 \
+          -e DISCORD_BOT_TOKEN=$_DISCORD_BOT_TOKEN \
+          -e DISCORD_CLIENT_ID=$_DISCORD_CLIENT_ID \
+          -e DISCORD_GUILD_ID=$_DISCORD_GUILD_ID \
+          -e YOUTUBE_API_ENDPOINT=$_YOUTUBE_API_ENDPOINT \
+          gcr.io/$PROJECT_ID/video-downloader-bot:latest
+    id: Deploy
+images:
+  - 'gcr.io/$PROJECT_ID/video-downloader-bot:latest'
+timeout: '1600s'
