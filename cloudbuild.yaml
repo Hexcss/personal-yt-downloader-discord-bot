@@ -6,7 +6,7 @@ steps:
     args:
       - '-c'
       - |
-        tar --exclude=video-bot.tar.gz -zcvf video-bot.tar.gz .
+        tar --exclude=video-bot.tar.gz --exclude='.git' -zcvf video-bot.tar.gz .
 
   # Step 2: Copy the tarball to the Compute Engine instance
   - name: 'gcr.io/cloud-builders/gcloud'
