@@ -1,19 +1,27 @@
 steps:
-  # New Step: Copy files to the Compute Engine instance
+  # Step 1: Prepare the Theme Archive
   - name: 'gcr.io/cloud-builders/gcloud'
-    id: CopyFiles
+    id: 'PrepareThemeArchive'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        tar --exclude=video-bot.tar.gz -zcvf video-bot.tar.gz .
+
+  # Step 2: Copy the tarball to the Compute Engine instance
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: CopyArchive
     args:
       - compute
       - scp
-      - --recurse # Use this option to copy directories recursively
-      - ./ # Assuming you want to copy everything from the current directory
-      - '$_GCE_USERNAME@$_GCE_INSTANCE:~/video-downloader' # Adjust the destination path as needed
+      - video-bot.tar.gz
+      - '$_GCE_USERNAME@$_GCE_INSTANCE:~/'
       - --zone=$_GCE_ZONE
       - --project=$_PROJECT_ID
 
-  # New Step: SSH into the instance, build and run Docker container
+  # Step 3: SSH into the instance, unpack the tarball, build and run Docker container
   - name: 'gcr.io/cloud-builders/gcloud'
-    id: BuildAndRunDocker
+    id: SetupAndDeploy
     args:
       - compute
       - ssh
@@ -21,7 +29,8 @@ steps:
       - '--zone=$_GCE_ZONE'
       - '--command'
       - |
-        cd ~/video-downloader' && \
+        tar -zxvf ~/video-bot.tar.gz -C ~/video-bot && \
+        cd ~/video-bot && \
         sudo docker build -t video-downloader-bot:latest . && \
         sudo docker stop video-downloader-bot-container || true && \
         sudo docker run --rm -d --name video-downloader-bot-container \
@@ -31,8 +40,6 @@ steps:
           -e DISCORD_GUILD_ID=$_DISCORD_GUILD_ID \
           -e YOUTUBE_API_ENDPOINT=$_YOUTUBE_API_ENDPOINT \
           video-downloader-bot:latest
-
-# The `images` section is not needed since we're not pushing the image to Google Container Registry in this scenario
 
 options:
   logging: CLOUD_LOGGING_ONLY
