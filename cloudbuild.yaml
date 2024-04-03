@@ -30,7 +30,7 @@ steps:
       - '--zone=$_GCE_ZONE'
       - '--command'
       - |
-        tar -zxvf ~/video-bot.tar.gz -C ~/video-bot && \
+        tar -zxvf ~/video-bot/video-bot.tar.gz -C ~/video-bot && \
         cd ~/video-bot && \
         sudo docker build -t video-downloader-bot:latest . && \
         sudo docker stop video-downloader-bot-container || true && \
