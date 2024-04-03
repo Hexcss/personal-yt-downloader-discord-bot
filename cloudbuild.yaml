@@ -1,43 +1,38 @@
 steps:
-  # Step 1: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: 
-      - 'build'
-      - '-t'
-      - 'gcr.io/$_PROJECT_ID/video-downloader-bot:latest'
-      - '.' # Assuming your Dockerfile is in the root directory
-    id: Build
-
-  # Step 2: Push the Docker image to Google Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'gcr.io/$_PROJECT_ID/video-downloader-bot:latest'
-    id: Push
-
-  # Step 3: Deploy the Docker image to the Compute Engine instance
+  # New Step: Copy files to the Compute Engine instance
   - name: 'gcr.io/cloud-builders/gcloud'
+    id: CopyFiles
     args:
-      - 'compute'
-      - 'ssh'
+      - compute
+      - scp
+      - --recurse # Use this option to copy directories recursively
+      - ./ # Assuming you want to copy everything from the current directory
+      - '$_GCE_USERNAME@$_GCE_INSTANCE:~/video-downloader' # Adjust the destination path as needed
+      - --zone=$_GCE_ZONE
+      - --project=$_PROJECT_ID
+
+  # New Step: SSH into the instance, build and run Docker container
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: BuildAndRunDocker
+    args:
+      - compute
+      - ssh
       - '$_GCE_USERNAME@$_GCE_INSTANCE'
-      - '--zone'
-      - '$_GCE_ZONE'
+      - '--zone=$_GCE_ZONE'
       - '--command'
       - |
-        sudo docker pull gcr.io/$_PROJECT_ID/video-downloader-bot:latest && 
-        sudo docker stop video-downloader-bot-container || true && # Prevents errors if the container isn't running
+        cd ~/video-downloader' && \
+        sudo docker build -t video-downloader-bot:latest . && \
+        sudo docker stop video-downloader-bot-container || true && \
         sudo docker run --rm -d --name video-downloader-bot-container \
           -p 3001:3001 \
           -e DISCORD_BOT_TOKEN=$_DISCORD_BOT_TOKEN \
           -e DISCORD_CLIENT_ID=$_DISCORD_CLIENT_ID \
           -e DISCORD_GUILD_ID=$_DISCORD_GUILD_ID \
           -e YOUTUBE_API_ENDPOINT=$_YOUTUBE_API_ENDPOINT \
-          gcr.io/$_PROJECT_ID/video-downloader-bot:latest
-    id: Deploy
+          video-downloader-bot:latest
 
-images:
-  - 'gcr.io/$_PROJECT_ID/video-downloader-bot:latest'
+# The `images` section is not needed since we're not pushing the image to Google Container Registry in this scenario
 
 options:
   logging: CLOUD_LOGGING_ONLY
