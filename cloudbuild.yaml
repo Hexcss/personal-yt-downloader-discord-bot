@@ -16,7 +16,7 @@ steps:
       - compute
       - scp
       - video-bot.tar.gz
-      - '$_GCE_USERNAME@$_GCE_INSTANCE:~/'
+      - '$_GCE_USERNAME@$_GCE_INSTANCE:~/video-bot'
       - --zone=$_GCE_ZONE
       - --project=$_PROJECT_ID
 
