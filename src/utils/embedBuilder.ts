@@ -27,7 +27,7 @@ export function createDownloadEmbed(
     .setTimestamp();
 
   const fileUrl = encodeURIComponent(downloadURL);
-  const downloadButtonUrl = `${environment.youtubeApiEndpoint}/download?fileUrl=${fileUrl}`;
+  const downloadButtonUrl = fileUrl;
 
   const downloadButton = new ButtonBuilder()
     .setStyle(ButtonStyle.Link)
