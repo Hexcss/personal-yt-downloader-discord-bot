@@ -16,7 +16,9 @@ export async function handleDownloadCommand(interaction: CommandInteraction) {
 
     console.log("Response Status:", response.status);
 
-    if (typeof response.data === "string") {
+    const fileSlug = response.data.slug as string;
+
+    if (fileSlug !== "" || fileSlug !== undefined) {
       const { embeds, components }= createDownloadEmbed(response.data);
       await interaction.editReply({ embeds, components } as { embeds: EmbedBuilder[]});
     } else {
