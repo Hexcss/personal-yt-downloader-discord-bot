@@ -5,9 +5,10 @@ import {
   ButtonStyle,
 } from "discord.js";
 import { EmbedBuilderWithComponents } from "./types";
+import { environment } from "../config/environment";
 
 export function createDownloadEmbed(
-  downloadURL: string
+  slug: string
 ): EmbedBuilderWithComponents {
   const embed = new EmbedBuilder()
     .setTitle("🎵 Your audio file is ready!")
@@ -25,8 +26,7 @@ export function createDownloadEmbed(
     }) // Replace with your bot's name and icon URL
     .setTimestamp();
 
-  const fileUrl = encodeURIComponent(downloadURL);
-  const downloadButtonUrl = fileUrl;
+  const downloadButtonUrl = `${environment.youtubeApiEndpoint}/ytdl/downloadmp3/${slug}`;
 
   const downloadButton = new ButtonBuilder()
     .setStyle(ButtonStyle.Link)
