@@ -5,7 +5,6 @@ import {
   ButtonStyle,
 } from "discord.js";
 import { EmbedBuilderWithComponents } from "./types";
-import { environment } from "../config/environment";
 
 export function createDownloadEmbed(
   downloadURL: string

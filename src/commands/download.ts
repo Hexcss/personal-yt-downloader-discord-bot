@@ -5,7 +5,7 @@ import { createDownloadEmbed } from '../utils/embedBuilder';
 
 async function shortenUrl(longUrl: string): Promise<string> {
   const response = await axios.get(`http://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
-  return response.data;
+  return decodeURIComponent(response.data); // Decode the URL
 }
 
 export async function handleDownloadCommand(interaction: CommandInteraction) {
